@@ -55,8 +55,7 @@ pub fn list_node(line: &str) -> Node {
 
 #[inline(always)]
 pub fn header_node(line: &str) -> Node {
-  let copy = String::from(line);
-  let some_copy = Some(copy);
+  let some_copy = Some(String::from(line));
   Node {
     node_type: NodeType::Header,
     node_info: NodeInfo {
