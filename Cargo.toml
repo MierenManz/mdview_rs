@@ -1,0 +1,6 @@
+[workspace]
+members = ["lexer", "generator", "cli"]
+
+[profile.release]
+lto = true
+opt-level = 3

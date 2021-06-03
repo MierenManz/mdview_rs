@@ -1,0 +1,12 @@
+[package]
+name = "mdview-lexer"
+version = "0.1.0"
+authors = ["Skyler van Boheemen"]
+edition = "2018"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+regex = "1.5.4"
+serde = { version = "1.0.126", features = ["derive"] }
