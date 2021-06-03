@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize)]
 pub enum NodeType {
   Header,
   NewLine,
@@ -9,14 +9,14 @@ pub enum NodeType {
   SList,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize)]
 pub struct TextAttributes {
   pub image_or_link: bool,
   pub strike: bool,
   pub bold_or_italics: bool,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize)]
 pub struct NodeInfo {
   pub text: Option<String>,
   pub attributes: Option<TextAttributes>,
@@ -24,7 +24,7 @@ pub struct NodeInfo {
   pub sorted_list_number: Option<usize>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize)]
 pub struct Node {
   pub node_type: NodeType,
   pub node_info: NodeInfo,
@@ -32,7 +32,7 @@ pub struct Node {
   pub include_next_line: bool,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize)]
 pub struct AST {
   pub body: Vec<Node>,
 }
