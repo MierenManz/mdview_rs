@@ -23,12 +23,12 @@ pub fn generate_ast(markdown_string: String) -> AST {
     } else if character == '\n' || iter == array_length {
       line = String::from(line.trim());
       if line.starts_with("#") {
-        if i - 1 < ast.body.len() {
+        if i > 0 && i < ast.body.len() {
           ast.body[i - 1].include_next_line = false;
         }
         ast.body.push(header_node(&line));
       } else if line.starts_with("- ") || s_list_regex.is_match(&line) {
-        if i - 1 < ast.body.len() {
+        if i > 0 && i < ast.body.len() {
           ast.body[i - 1].include_next_line = false;
         }
 
@@ -37,6 +37,21 @@ pub fn generate_ast(markdown_string: String) -> AST {
         ast.body.push(normal_line(&line));
       } else {
         ast.body.push(new_line());
+      }
+
+      if i > 2
+        && i < ast.body.len()
+        && ast.body[ast.body.len() - 2].include_next_line
+        && ast.body[ast.body.len() - 1].allow_merge
+      {
+        let len = ast.body.len();
+        let old_index = len - 2;
+        let old_node = ast.body[old_index].clone();
+        let current_node = ast.body[len - 1].clone();
+
+        let new_node = merge_nodes(old_node, current_node);
+        ast.body.remove(old_index);
+        ast.body[old_index] = new_node;
       }
 
       line = String::new();
