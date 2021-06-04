@@ -6,21 +6,21 @@ use regex::Regex;
 use structures::*;
 
 #[inline(always)]
-pub fn generate_ast(markdown_string: String) -> AST {
+pub fn generate_ast(mut markdown_string: String) -> AST {
   let mut ast = AST { body: Vec::new() };
+  if !markdown_string.ends_with('\n') {
+    markdown_string.push('\n');
+  }
   let chararray = markdown_string.chars();
   let array_length = markdown_string.len();
   let s_list_regex = Regex::new("/^[0-9]\\.\\s/g").unwrap();
   let mut line = String::new();
   let mut i = 0;
-  let mut iter = 0;
 
   for character in chararray {
-    iter += 1;
-
     if character != '\n' {
       line.push(character);
-    } else if character == '\n' || iter == array_length {
+    } else if character == '\n' || i + 1 == array_length {
       line = String::from(line.trim());
       if line.starts_with("#") {
         if i > 0 && i < ast.body.len() {
@@ -38,20 +38,22 @@ pub fn generate_ast(markdown_string: String) -> AST {
       } else {
         ast.body.push(new_line());
       }
-
-      if i > 2
-        && i - 1 < ast.body.len()
-        && ast.body[ast.body.len() - 2].include_next_line
-        && ast.body[ast.body.len() - 1].allow_merge
       {
         let len = ast.body.len();
         let old_index = len - 2;
-        let old_node = ast.body[old_index].clone();
-        let current_node = ast.body[len - 1].clone();
+        let current_index = len - 1;
+        if i > 2
+          && i - 1 < len
+          && ast.body[old_index].include_next_line
+          && ast.body[current_index].allow_merge
+        {
+          let old_node = ast.body[old_index].clone();
+          let current_node = ast.body[current_index].clone();
 
-        let new_node = merge_nodes(old_node, current_node);
-        ast.body.remove(old_index);
-        ast.body[old_index] = new_node;
+          let new_node = merge_nodes(old_node, current_node);
+          ast.body.remove(old_index);
+          ast.body[old_index] = new_node;
+        }
       }
 
       line = String::new();
