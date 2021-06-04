@@ -5,7 +5,8 @@ use std::fs;
 
 pub fn main() {
   let args = get_cli_args();
-  let data = fs::read_to_string(args.input).unwrap();
+  let mut data = fs::read_to_string(args.input).unwrap();
+  data.push('\n');
   let start = std::time::Instant::now();
   let ast = generate_ast(data);
   let stop = start.elapsed().as_millis();
