@@ -40,7 +40,7 @@ pub fn generate_ast(markdown_string: String) -> AST {
       }
 
       if i > 2
-        && i < ast.body.len()
+        && i - 1 < ast.body.len()
         && ast.body[ast.body.len() - 2].include_next_line
         && ast.body[ast.body.len() - 1].allow_merge
       {
