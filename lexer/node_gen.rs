@@ -98,7 +98,7 @@ fn get_attributes(line: &str) -> Option<TextAttributes> {
 fn push_new_str(first_string: String, string: String) -> String {
   let mut copy = String::from(first_string);
 
-  if !string.starts_with(" ") {
+  if !(string.starts_with(" ") || copy.ends_with(" ")) {
     copy.push_str(" ");
   }
 
