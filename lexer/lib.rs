@@ -39,16 +39,15 @@ pub fn generate_ast(mut markdown_string: String) -> AST {
         ast.body.push(new_line());
       }
       {
-        let len = ast.body.len();
-        let old_index = len - 2;
-        let current_index = len - 1;
         if i > 2
-          && i - 1 < len
-          && ast.body[old_index].include_next_line
-          && ast.body[current_index].allow_merge
+          && i - 1 < ast.body.len()
+          && ast.body[ast.body.len() - 2].include_next_line
+          && ast.body[ast.body.len() - 1].allow_merge
         {
+          let len = ast.body.len();
+          let old_index = len - 2;
           let old_node = ast.body[old_index].clone();
-          let current_node = ast.body[current_index].clone();
+          let current_node = ast.body[len - 1].clone();
 
           let new_node = merge_nodes(old_node, current_node);
           ast.body.remove(old_index);
@@ -66,5 +65,5 @@ pub fn generate_ast(mut markdown_string: String) -> AST {
     ast.body[len - 1].include_next_line = false;
   }
 
-  return ast;
+  ast
 }
