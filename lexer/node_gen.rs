@@ -72,7 +72,7 @@ pub fn merge_nodes(last_node: Node, current_node: Node) -> Node {
     current_node.node_info.string.unwrap(),
   );
 
-  Node {
+  return Node {
     node_type: last_node.node_type,
     node_info: NodeInfo {
       string: Some(string.clone()),
@@ -82,7 +82,7 @@ pub fn merge_nodes(last_node: Node, current_node: Node) -> Node {
     },
     include_next_line: current_node.include_next_line,
     allow_merge: last_node.allow_merge,
-  }
+  };
 }
 
 #[inline(always)]
@@ -98,11 +98,7 @@ fn get_attributes(line: &str) -> Option<TextAttributes> {
 fn push_new_str(first_string: String, string: String) -> String {
   let mut copy = String::from(first_string);
 
-  if !(string.starts_with(" ") || copy.ends_with(" ")) {
-    copy.push_str(" ");
-  }
-
   copy.push_str(&string);
 
-  copy
+  return copy;
 }
