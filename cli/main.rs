@@ -1,20 +1,29 @@
-use clap::{App, Arg};
-use mdview_lexer::*;
+use clap::App;
+use clap::Arg;
+use mdview_html::generate_html_from_ast;
+use mdview_lexer::generate_ast;
+use mdview_lexer::structures::AST;
 use serde_json::to_string_pretty;
 use std::fs;
 
 pub fn main() {
   let args = get_cli_args();
-  let mut data = fs::read_to_string(args.input).unwrap();
-  data.push('\n');
+  let data = fs::read_to_string(args.input).unwrap();
   let start = std::time::Instant::now();
   let ast = generate_ast(data);
   let stop = start.elapsed().as_millis();
   println!("{}", stop);
-  // print!("{:?}", ast);
-  let json_data =
-    to_string_pretty(&structures::AST { body: ast.body }).unwrap();
+
+  let json_data = to_string_pretty(&AST {
+    body: ast.body.clone(),
+  })
+  .unwrap();
   fs::write("out.json", json_data).unwrap();
+
+  let htmlcode = generate_html_from_ast(ast.clone());
+  // println!("{:?}", htmlcode);
+
+  fs::write("out.html", htmlcode).unwrap();
 }
 
 fn get_cli_args() -> Arguments {
