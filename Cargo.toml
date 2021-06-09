@@ -1,5 +1,5 @@
 [workspace]
-members = ["lexer", "generator", "cli"]
+members = ["lexer", "html", "cli"]
 
 [profile.release]
 lto = true
