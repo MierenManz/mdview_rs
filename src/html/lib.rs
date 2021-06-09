@@ -17,7 +17,7 @@ pub fn generate_html_from_ast(tree: Ast) -> String {
             NodeType::NormalLine => normal_line(node),
             NodeType::NewLine => new_line(),
             NodeType::UnsortedList => unsorted_list(node),
-            NodeType::SortedList(_) => sorted_list(node),
+            NodeType::SortedList(value) => sorted_list(node, value),
         };
         html_string.push_str(&string);
     }
