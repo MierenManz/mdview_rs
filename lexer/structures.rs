@@ -32,7 +32,7 @@ pub struct Node {
   pub allow_merge: bool,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct AST {
   pub body: Vec<Node>,
 }
