@@ -44,7 +44,12 @@ pub fn list_node(line: &str) -> Node {
       string: Some(String::from(line)),
       attributes: get_attributes(line),
       header: None,
-      sorted_list_number: if !is_ulist { line.find(".") } else { None },
+      sorted_list_number: if !is_ulist {
+        let reg = Regex::new("^(\\d+)").unwrap();
+        Some(reg.captures(line).unwrap()[0].parse::<usize>().unwrap())
+      } else {
+        None
+      },
     },
     include_next_line: !(line.ends_with("  ") || line.ends_with("\\")),
     allow_merge: false,

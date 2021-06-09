@@ -13,7 +13,7 @@ pub fn generate_ast(mut markdown_string: String) -> AST {
   }
   let chararray = markdown_string.chars();
   let array_length = markdown_string.len();
-  let s_list_regex = Regex::new("/^[0-9]\\.\\s/g").unwrap();
+  let s_list_regex = Regex::new("^\\d+\\.\\s+.*").unwrap();
   let mut line = String::new();
   let mut i = 0;
 
