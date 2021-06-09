@@ -29,13 +29,13 @@ pub fn new_line() -> Node {
 
 #[inline(always)]
 pub fn list_node(line: &str) -> Node {
-    let is_unsorted_list = Regex::new("^-\\s+").unwrap().is_match(line);
+    let is_unsorted_list = Regex::new(r"^-\s+").unwrap().is_match(line);
     Node {
         r#type: if is_unsorted_list {
             NodeType::UnsortedList
         } else {
             NodeType::SortedList(
-                Regex::new("^(\\d+)").unwrap().captures(line).unwrap()[0]
+                Regex::new(r"^(\d+)").unwrap().captures(line).unwrap()[0]
                     .parse::<usize>()
                     .unwrap(),
             )
@@ -83,13 +83,9 @@ pub fn merge_nodes(last_node: Node, current_node: Node) -> Node {
 #[inline(always)]
 fn get_attributes(line: &str) -> Option<TextAttributes> {
     Some(TextAttributes {
-        image_or_link: Regex::new("\\[(.*)\\]\\((.*)\\)")
-            .unwrap()
-            .is_match(line),
-        strike: Regex::new("~~(.*)~~").unwrap().is_match(line),
-        bold_or_italics: Regex::new("\\*(.*)\\*|_(.*)_")
-            .unwrap()
-            .is_match(line),
+        image_or_link: Regex::new(r"\[(.*)\]\((.*)\)").unwrap().is_match(line),
+        strike: Regex::new(r"~~(.*)~~").unwrap().is_match(line),
+        bold_or_italics: Regex::new(r"\*(.*)\*").unwrap().is_match(line),
     })
 }
 

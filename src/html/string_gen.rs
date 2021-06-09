@@ -33,12 +33,13 @@ pub(crate) fn unsorted_list(node: Node) -> String {
 }
 
 #[inline(always)]
-pub(crate) fn sorted_list(node: Node) -> String {
+pub(crate) fn sorted_list(node: Node, list: usize) -> String {
     let node_string = node.info.string.clone().unwrap();
     let replace_reg = Regex::new("^-\\s+(.*)").unwrap();
 
     return format!(
-        "<ol><li>{}</li></ol>",
+        "<ol start=\"{}\"><li>{}</li></ol>",
+        list,
         serialize(node, &replace_reg.replace_all(&node_string, "$1"))
     );
 }

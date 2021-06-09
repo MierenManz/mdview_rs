@@ -11,7 +11,7 @@ pub fn generate_ast(mut markdown_string: String) -> Ast {
         markdown_string.push('\n');
     }
 
-    let s_list_regex = Regex::new("^\\d+\\.\\s+.*").unwrap();
+    let s_list_regex = Regex::new(r"^\d+\.\s+.*").unwrap();
 
     for (iteration, line) in markdown_string.lines().enumerate() {
         let node = if line.starts_with('#') {

@@ -17,8 +17,8 @@ pub(crate) fn serialize(node: Node, node_string: &str) -> String {
     let mut string = String::from(node_string);
 
     if attributes.image_or_link {
-        let image_reg = Regex::new("!\\[(.*)\\]\\((.*)\\)").unwrap();
-        let href_reg = Regex::new("\\[(.*)\\]\\((.*)\\)").unwrap();
+        let image_reg = Regex::new(r"!\[(.*)\]\((.*)\)").unwrap();
+        let href_reg = Regex::new(r"\[(.*)\]\((.*)\)").unwrap();
 
         let first_pass = image_reg.replace_all(
             &string,
@@ -31,8 +31,8 @@ pub(crate) fn serialize(node: Node, node_string: &str) -> String {
     }
 
     if attributes.bold_or_italics {
-        let bold_reg = Regex::new("\\*\\*(.*)\\*\\*").unwrap();
-        let italic_reg = Regex::new("\\*(.*)\\*").unwrap();
+        let bold_reg = Regex::new(r"\*\*(.*)\*\*").unwrap();
+        let italic_reg = Regex::new(r"\*(.*)\*").unwrap();
 
         let first_pass = bold_reg.replace_all(&string, "<b>$1</b>");
 
@@ -40,7 +40,7 @@ pub(crate) fn serialize(node: Node, node_string: &str) -> String {
     }
 
     if attributes.strike {
-        let strike_reg = Regex::new("\\~\\~(.*)\\~\\~").unwrap();
+        let strike_reg = Regex::new(r"\~\~(.*)\~\~").unwrap();
 
         string = String::from(strike_reg.replace_all(&string, "<del>$1</del>"));
     }
