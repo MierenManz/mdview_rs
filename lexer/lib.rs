@@ -60,10 +60,8 @@ pub fn generate_ast(mut markdown_string: String) -> AST {
     }
   }
 
-  {
-    let len = ast.body.len();
-    ast.body[len - 1].include_next_line = false;
-  }
+  let len = ast.body.len();
+  ast.body[len - 1].include_next_line = false;
 
-  ast
+  return ast;
 }

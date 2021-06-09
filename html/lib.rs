@@ -7,7 +7,6 @@ pub fn generate_html_from_ast(tree: AST) -> String {
   let mut html_string = String::new();
 
   for node in tree.body {
-    let node_type = node.node_type.clone();
     let string = match node.node_type {
       NodeType::Header => header(node),
       NodeType::NormalLine => normal_line(node),
@@ -16,7 +15,6 @@ pub fn generate_html_from_ast(tree: AST) -> String {
       // NodeType::SList => sorted_list(node),
       _ => String::from("\n"),
     };
-    println!("{:?}: {}", node_type, string);
     html_string.push_str(&string);
   }
 

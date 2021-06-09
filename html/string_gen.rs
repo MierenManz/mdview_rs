@@ -6,7 +6,7 @@ use regex::Regex;
 pub fn header(node: Node) -> String {
   let node_string = node.node_info.string.clone().unwrap();
   let header = node.node_info.header.unwrap();
-  let string = node_string.split_at(header + 1).1;
+  let string = &node_string[..header + 1];
 
   return format!("<h{0}>{1}</h{0}>", header, serialize(node, string));
 }

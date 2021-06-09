@@ -3,7 +3,7 @@ use regex::Regex;
 
 #[inline(always)]
 pub fn serialize(node: Node, node_string: &str) -> String {
-  let attributes = node.node_info.attributes.clone().unwrap();
+  let attributes = node.node_info.attributes.unwrap();
   let mut string = String::from(node_string);
 
   if attributes.image_or_link {

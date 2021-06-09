@@ -20,7 +20,7 @@ pub fn main() {
   .unwrap();
   fs::write("out.json", json_data).unwrap();
 
-  let htmlcode = generate_html_from_ast(ast.clone());
+  let htmlcode = generate_html_from_ast(ast);
   // println!("{:?}", htmlcode);
 
   fs::write("out.html", htmlcode).unwrap();
