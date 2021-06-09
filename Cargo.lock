@@ -76,13 +76,18 @@ name = "mdview-cli"
 version = "0.1.0"
 dependencies = [
  "clap",
+ "mdview-html",
  "mdview-lexer",
  "serde_json",
 ]
 
 [[package]]
-name = "mdview-generator"
+name = "mdview-html"
 version = "0.1.0"
+dependencies = [
+ "mdview-lexer",
+ "regex",
+]
 
 [[package]]
 name = "mdview-lexer"
