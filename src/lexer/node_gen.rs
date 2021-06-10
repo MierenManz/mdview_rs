@@ -2,7 +2,7 @@ use super::structures::*;
 use regex::Regex;
 
 #[inline(always)]
-pub fn normal_line(line: &str) -> Node {
+pub(crate) fn normal_line(line: &str) -> Node {
     Node {
         r#type: NodeType::NormalLine,
         info: NodeInfo {
@@ -15,7 +15,7 @@ pub fn normal_line(line: &str) -> Node {
 }
 
 #[inline(always)]
-pub fn new_line() -> Node {
+pub(crate) fn new_line() -> Node {
     Node {
         r#type: NodeType::NewLine,
         info: NodeInfo {
@@ -28,7 +28,7 @@ pub fn new_line() -> Node {
 }
 
 #[inline(always)]
-pub fn list_node(line: &str) -> Node {
+pub(crate) fn list_node(line: &str) -> Node {
     let is_unsorted_list = Regex::new(r"^-\s+").unwrap().is_match(line);
     Node {
         r#type: if is_unsorted_list {
@@ -50,7 +50,7 @@ pub fn list_node(line: &str) -> Node {
 }
 
 #[inline(always)]
-pub fn header_node(line: &str) -> Node {
+pub(crate) fn header_node(line: &str) -> Node {
     Node {
         r#type: NodeType::Header(line.find(' ').unwrap()),
         info: NodeInfo {
@@ -63,7 +63,7 @@ pub fn header_node(line: &str) -> Node {
 }
 
 #[inline(always)]
-pub fn merge_nodes(last_node: Node, current_node: Node) -> Node {
+pub(crate) fn merge_nodes(last_node: Node, current_node: Node) -> Node {
     let string = push_new_str(
         last_node.info.string.unwrap(),
         current_node.info.string.unwrap(),
