@@ -11,6 +11,7 @@ pub enum NodeType {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct TextAttributes {
+    pub inline_code: bool,
     pub image_or_link: bool,
     pub strike: bool,
     pub bold_or_italics: bool,

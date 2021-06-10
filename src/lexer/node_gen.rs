@@ -83,6 +83,7 @@ pub fn merge_nodes(last_node: Node, current_node: Node) -> Node {
 #[inline(always)]
 fn get_attributes(line: &str) -> Option<TextAttributes> {
     Some(TextAttributes {
+        inline_code: Regex::new("`(.*)`").unwrap().is_match(line),
         image_or_link: Regex::new(r"\[(.*)\]\((.*)\)").unwrap().is_match(line),
         strike: Regex::new(r"~~(.*)~~").unwrap().is_match(line),
         bold_or_italics: Regex::new(r"\*(.*)\*").unwrap().is_match(line),
