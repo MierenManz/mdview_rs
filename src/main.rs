@@ -18,7 +18,7 @@ pub fn main() {
 }
 
 fn get_cli_args() -> Arguments {
-    let cli_args = App::new("Markdown To HTML")
+    let cli_args = App::new("MDview")
         .version("v0.1.0")
         .arg(
             Arg::with_name("Input File")
