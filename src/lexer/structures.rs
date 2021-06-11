@@ -1,6 +1,4 @@
-use serde::Serialize;
-
-#[derive(Serialize, Clone, Debug)]
+#[derive(Clone, Debug)]
 pub enum NodeType {
     Header(usize),
     NewLine,
@@ -9,7 +7,7 @@ pub enum NodeType {
     SortedList(usize),
 }
 
-#[derive(Serialize, Clone, Debug)]
+#[derive(Clone, Debug)]
 pub struct TextAttributes {
     pub inline_code: bool,
     pub image_or_link: bool,
@@ -17,13 +15,13 @@ pub struct TextAttributes {
     pub bold_or_italics: bool,
 }
 
-#[derive(Serialize, Clone, Debug)]
+#[derive(Clone, Debug)]
 pub struct NodeInfo {
     pub string: Option<String>,
     pub attributes: Option<TextAttributes>,
 }
 
-#[derive(Serialize, Clone, Debug)]
+#[derive(Clone, Debug)]
 pub struct Node {
     pub r#type: NodeType,
     pub info: NodeInfo,
@@ -31,7 +29,7 @@ pub struct Node {
     pub allow_merge: bool,
 }
 
-#[derive(Serialize, Debug, Clone)]
+#[derive(Debug, Clone)]
 pub struct Ast {
     pub body: Vec<Node>,
 }

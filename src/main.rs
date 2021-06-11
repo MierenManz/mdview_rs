@@ -2,9 +2,7 @@ use clap::App;
 use clap::Arg;
 use mdview_html::generate_html_from_ast;
 use mdview_lexer::generate_ast;
-use mdview_lexer::structures::Ast;
 use mdview_window::create_window;
-use serde_json::to_string_pretty;
 use std::fs;
 
 pub fn main() {
@@ -15,16 +13,8 @@ pub fn main() {
     let stop = start.elapsed().as_millis();
     println!("{}", stop);
 
-    let json_data = to_string_pretty(&Ast {
-        body: ast.body.clone(),
-    })
-    .unwrap();
-    fs::write("out.json", json_data).unwrap();
-
     let htmlcode = generate_html_from_ast(ast);
-    // println!("{:?}", htmlcode);
     create_window(&htmlcode, &args.input, true);
-    fs::write("out.html", htmlcode).unwrap();
 }
 
 fn get_cli_args() -> Arguments {

@@ -8,4 +8,4 @@ edition = "2018"
 path = "lib.rs"
 
 [dependencies]
-web-view = { version = "0.7.3" }
+web-view = "0.7.3"
