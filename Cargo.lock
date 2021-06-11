@@ -79,7 +79,6 @@ dependencies = [
  "mdview-html",
  "mdview-lexer",
  "regex",
- "serde",
  "serde_json",
 ]
 
