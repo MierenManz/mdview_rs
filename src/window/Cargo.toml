@@ -1,0 +1,11 @@
+[package]
+name = "mdview-window"
+version = "0.1.0"
+authors = ["Skyler van Boheemen"]
+edition = "2018"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+web-view = { version = "0.7.3" }
