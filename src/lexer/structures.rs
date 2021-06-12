@@ -1,4 +1,4 @@
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub enum NodeType {
     Header(usize),
     NewLine,
@@ -7,7 +7,7 @@ pub enum NodeType {
     SortedList(usize),
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub struct TextAttributes {
     pub inline_code: bool,
     pub image_or_link: bool,
@@ -15,13 +15,13 @@ pub struct TextAttributes {
     pub bold_or_italics: bool,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub struct NodeInfo {
     pub string: Option<String>,
     pub attributes: Option<TextAttributes>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone)]
 pub struct Node {
     pub r#type: NodeType,
     pub info: NodeInfo,
@@ -29,7 +29,6 @@ pub struct Node {
     pub allow_merge: bool,
 }
 
-#[derive(Debug, Clone)]
 pub struct Ast {
     pub body: Vec<Node>,
 }

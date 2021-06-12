@@ -6,18 +6,16 @@ use mdview_window::create_window;
 use std::fs;
 
 pub fn main() {
-    let args = get_cli_args();
-    let data = fs::read_to_string(&args.input).unwrap();
-    let start = std::time::Instant::now();
-    let ast = generate_ast(data);
-    let stop = start.elapsed().as_millis();
-    println!("{}", stop);
+    let input = get_input_file();
+    let data = fs::read_to_string(&input).unwrap();
 
+    let ast = generate_ast(data);
     let htmlcode = generate_html_from_ast(ast);
-    create_window(&htmlcode, &args.input, true);
+
+    create_window(&htmlcode, &input, true);
 }
 
-fn get_cli_args() -> Arguments {
+fn get_input_file() -> String {
     let cli_args = App::new("MDview")
         .version("v0.1.0")
         .arg(
@@ -30,11 +28,5 @@ fn get_cli_args() -> Arguments {
         )
         .get_matches();
 
-    Arguments {
-        input: cli_args.value_of("Input File").unwrap().to_string(),
-    }
-}
-
-pub struct Arguments {
-    pub input: String,
+    String::from(cli_args.value_of("Input File").unwrap())
 }

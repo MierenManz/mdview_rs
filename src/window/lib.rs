@@ -7,8 +7,9 @@ pub fn create_window(text: &str, title: &str, debug: bool) {
         .content(Html(text))
         .size(800, 600)
         .debug(debug)
+        .resizable(true)
         .user_data(())
-        .invoke_handler(|_webview, _arg| Ok(()))
+        .invoke_handler(|_, _| Ok(()))
         .run()
         .unwrap();
 }
