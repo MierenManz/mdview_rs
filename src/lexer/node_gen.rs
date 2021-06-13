@@ -1,4 +1,5 @@
 use super::structures::*;
+use lazy_static::lazy_static;
 use regex::Regex;
 
 #[inline(always)]
@@ -29,13 +30,16 @@ pub(crate) fn new_line() -> Node {
 
 #[inline(always)]
 pub(crate) fn list_node(line: &str) -> Node {
-    let is_unsorted_list = Regex::new(r"^-\s+").unwrap().is_match(line);
+    lazy_static! {
+        static ref IS_UNSORTED_LIST: Regex = Regex::new(r"^-\s+").unwrap();
+        static ref SORTED_LIST: Regex = Regex::new(r"^(\d+)").unwrap();
+    };
     Node {
-        r#type: if is_unsorted_list {
+        r#type: if IS_UNSORTED_LIST.is_match(line) {
             NodeType::UnsortedList
         } else {
             NodeType::SortedList(
-                Regex::new(r"^(\d+)").unwrap().captures(line).unwrap()[0]
+                SORTED_LIST.captures(line).unwrap()[0]
                     .parse::<usize>()
                     .unwrap(),
             )
@@ -82,11 +86,18 @@ pub(crate) fn merge_nodes(last_node: Node, current_node: Node) -> Node {
 
 #[inline(always)]
 fn get_attributes(line: &str) -> Option<TextAttributes> {
+    lazy_static! {
+        static ref INLINE_CODE: Regex = Regex::new("`(.*)`").unwrap();
+        static ref IMAGE_OR_LINK: Regex =
+            Regex::new(r"\[(.*)\]\((.*)\)").unwrap();
+        static ref STRIKE: Regex = Regex::new(r"~~(.*)~~").unwrap();
+        static ref BOLD_OR_ITALICS: Regex = Regex::new(r"\*(.*)\*").unwrap();
+    }
     Some(TextAttributes {
-        inline_code: Regex::new("`(.*)`").unwrap().is_match(line),
-        image_or_link: Regex::new(r"\[(.*)\]\((.*)\)").unwrap().is_match(line),
-        strike: Regex::new(r"~~(.*)~~").unwrap().is_match(line),
-        bold_or_italics: Regex::new(r"\*(.*)\*").unwrap().is_match(line),
+        inline_code: INLINE_CODE.is_match(line),
+        image_or_link: IMAGE_OR_LINK.is_match(line),
+        strike: STRIKE.is_match(line),
+        bold_or_italics: BOLD_OR_ITALICS.is_match(line),
     })
 }
 

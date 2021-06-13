@@ -1,17 +1,18 @@
 mod node_gen;
 pub mod structures;
 
+use lazy_static::lazy_static;
 use node_gen::*;
 use regex::Regex;
 use structures::Ast;
-
 pub fn generate_ast(mut markdown_string: String) -> Ast {
     let mut ast = Ast { body: Vec::new() };
     if !markdown_string.ends_with('\n') {
         markdown_string.push('\n');
     }
-
-    let s_list_regex = Regex::new(r"^\d+\.\s+.*").unwrap();
+    lazy_static! {
+        static ref SORTED_LIST_REG: Regex = Regex::new(r"^\d+\.\s+.*").unwrap();
+    }
 
     for (iteration, line) in markdown_string.lines().enumerate() {
         let node = if line.starts_with('#') {
@@ -19,7 +20,7 @@ pub fn generate_ast(mut markdown_string: String) -> Ast {
                 ast.body[iteration - 1].include_next_line = false;
             }
             header_node(&line)
-        } else if line.starts_with("- ") || s_list_regex.is_match(&line) {
+        } else if line.starts_with("- ") || SORTED_LIST_REG.is_match(&line) {
             if iteration > 0 && iteration < ast.body.len() {
                 ast.body[iteration - 1].include_next_line = false;
             }

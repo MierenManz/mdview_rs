@@ -1,4 +1,5 @@
 use super::serializer::serialize;
+use lazy_static::lazy_static;
 use mdview_lexer::structures::Node;
 use regex::Regex;
 
@@ -24,11 +25,13 @@ pub(crate) fn new_line() -> String {
 #[inline(always)]
 pub(crate) fn unsorted_list(node: Node) -> String {
     let node_string = node.info.string.clone().unwrap();
-    let replace_reg = Regex::new("^-\\s+(.*)").unwrap();
+    lazy_static! {
+        static ref REPLACE_REG: Regex = Regex::new("^-\\s+(.*)").unwrap();
+    };
 
     return format!(
         "<ul><li>{}</li></ul>",
-        serialize(node, &replace_reg.replace_all(&node_string, "$1"))
+        serialize(node, &REPLACE_REG.replace_all(&node_string, "$1"))
     );
 }
 

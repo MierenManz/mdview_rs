@@ -12,7 +12,7 @@ pub fn main() {
     let ast = generate_ast(data);
     let htmlcode = generate_html_from_ast(ast);
 
-    create_window(&htmlcode, &input, true);
+    create_window(&htmlcode, &input, false);
 }
 
 fn get_input_file() -> String {
