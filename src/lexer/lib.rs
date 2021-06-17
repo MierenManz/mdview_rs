@@ -5,6 +5,7 @@ use lazy_static::lazy_static;
 use node_gen::*;
 use regex::Regex;
 use structures::Ast;
+
 pub fn generate_ast(mut markdown_string: String) -> Ast {
     let mut ast = Ast { body: Vec::new() };
     if !markdown_string.ends_with('\n') {

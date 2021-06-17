@@ -14,3 +14,22 @@ mdview-window = { path = "./src/window", version = "0.1.0" }
 mdview-html = { path = "./src/html", version = "0.1.0" }
 clap = "2.33.3"
 regex = "1.5.4"
+
+[profile.release]
+lto = true
+opt-level = 3
+
+[profile.release.package.mdview-lexer]
+opt-level = 3
+
+[profile.release.package.mdview-html]
+opt-level = 3
+
+[profile.release.package.mdview-window]
+opt-level = 3
+
+[profile.release.package.clap]
+opt-level = 3
+
+[profile.release.package.regex]
+opt-level = 3
