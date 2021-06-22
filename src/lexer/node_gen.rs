@@ -34,14 +34,13 @@ pub(crate) fn list_node(line: &str) -> Node {
         static ref IS_UNSORTED_LIST: Regex = Regex::new(r"^-\s+").unwrap();
         static ref SORTED_LIST: Regex = Regex::new(r"^(\d+)").unwrap();
     };
+
     Node {
         r#type: if IS_UNSORTED_LIST.is_match(line) {
             NodeType::UnsortedList
         } else {
             NodeType::SortedList(
-                SORTED_LIST.captures(line).unwrap()[0]
-                    .parse::<usize>()
-                    .unwrap(),
+                SORTED_LIST.captures(line).unwrap()[0].parse().unwrap(),
             )
         },
         info: NodeInfo {
@@ -93,6 +92,7 @@ fn get_attributes(line: &str) -> Option<TextAttributes> {
         static ref STRIKE: Regex = Regex::new(r"~~(.*)~~").unwrap();
         static ref BOLD_OR_ITALICS: Regex = Regex::new(r"\*(.*)\*").unwrap();
     }
+
     Some(TextAttributes {
         inline_code: INLINE_CODE.is_match(line),
         image_or_link: IMAGE_OR_LINK.is_match(line),

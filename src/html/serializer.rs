@@ -30,23 +30,14 @@ pub(crate) fn serialize(node: Node, node_string: &str) -> String {
     }
 
     if attributes.bold_or_italics {
-        lazy_static! {
-            static ref BOLD_REG: Regex = Regex::new(r"\*\*(.*?)\*\*").unwrap();
-            static ref ITALIC_REG: Regex = Regex::new(r"\*(.*?)\*").unwrap();
-        }
-
-        let first_pass = BOLD_REG.replace_all(&string, "<b>$1</b>");
-
-        string = String::from(ITALIC_REG.replace_all(&first_pass, "<i>$1</i>"));
+        string = format!(
+            "<i>{}</i>",
+            format!("<b>{}</b>", string.replace("**", "")).replace("*", "")
+        );
     }
 
     if attributes.strike {
-        lazy_static! {
-            static ref STRIKE_REG: Regex =
-                Regex::new(r"\~\~(.*?)\~\~").unwrap();
-        }
-
-        string = String::from(STRIKE_REG.replace_all(&string, "<del>$1</del>"));
+        string = format!("<del>{}</del>", string.replace("~~", ""));
     }
 
     if attributes.inline_code {

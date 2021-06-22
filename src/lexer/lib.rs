@@ -19,8 +19,8 @@ pub fn generate_ast(mut markdown_string: String) -> Ast {
         let mut body_len = ast.body.len();
 
         let node = if line.starts_with('#') {
-            if iteration > 0 && iteration < body_len {
-                ast.body[iteration - 1].include_next_line = false;
+            if iteration > 0 && body_len > 0 {
+                ast.body[body_len - 1].include_next_line = false;
             }
             header_node(&line)
         } else if line.starts_with("- ") || SORTED_LIST_REG.is_match(&line) {
@@ -39,14 +39,16 @@ pub fn generate_ast(mut markdown_string: String) -> Ast {
 
         body_len += 1;
 
+        let old_index = body_len - 2;
+        let new_index = body_len - 1;
+
         if iteration > 2
             && iteration - 1 < body_len
-            && ast.body[body_len - 2].include_next_line
-            && ast.body[body_len - 1].allow_merge
+            && ast.body[old_index].include_next_line
+            && ast.body[new_index].allow_merge
         {
-            let old_index = body_len - 2;
             let old_node = ast.body[old_index].clone();
-            let current_node = ast.body[body_len - 1].clone();
+            let current_node = ast.body[new_index].clone();
 
             let new_node = merge_nodes(old_node, current_node);
             ast.body.remove(old_index);
