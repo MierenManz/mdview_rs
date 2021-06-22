@@ -67,20 +67,20 @@ pub(crate) fn header_node(line: &str) -> Node {
 }
 
 #[inline(always)]
-pub(crate) fn merge_nodes(last_node: Node, current_node: Node) -> Node {
+pub(crate) fn merge_nodes(old_node: Node, current_node: Node) -> Node {
     let string = push_new_str(
-        last_node.info.string.unwrap(),
+        old_node.info.string.unwrap(),
         current_node.info.string.unwrap(),
     );
 
     Node {
-        r#type: last_node.r#type,
+        r#type: old_node.r#type,
         info: NodeInfo {
             string: Some(string.clone()),
             attributes: get_attributes(&string),
         },
         include_next_line: current_node.include_next_line,
-        allow_merge: last_node.allow_merge,
+        allow_merge: old_node.allow_merge,
     }
 }
 
