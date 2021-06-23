@@ -8,9 +8,11 @@ use structures::Ast;
 
 pub fn generate_ast(mut markdown_string: String) -> Ast {
     let mut ast = Ast { body: Vec::new() };
+
     if !markdown_string.ends_with('\n') {
         markdown_string.push('\n');
     }
+
     lazy_static! {
         static ref SORTED_LIST_REG: Regex = Regex::new(r"^\d+\.\s+.*").unwrap();
     }

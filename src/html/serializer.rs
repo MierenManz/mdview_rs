@@ -19,6 +19,7 @@ pub(crate) fn serialize(node: Node, node_string: &str) -> String {
             static ref HREF_REG: Regex =
                 Regex::new(r"\[(.*?)\]\((.*?)\)").unwrap();
         }
+
         let first_pass = IMAGE_REG.replace_all(
             &string,
             "<a href=\"$2\"><img border=\"0\" src=\"$2\">$1</a>",

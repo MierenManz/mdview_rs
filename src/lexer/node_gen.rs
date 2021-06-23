@@ -67,10 +67,9 @@ pub(crate) fn header_node(line: &str) -> Node {
 
 #[inline(always)]
 pub(crate) fn merge_nodes(old_node: Node, current_node: Node) -> Node {
-    let string = push_new_str(
-        old_node.info.string.unwrap(),
-        current_node.info.string.unwrap(),
-    );
+    let mut string = old_node.info.string.unwrap();
+
+    string.push_str(&current_node.info.string.unwrap());
 
     Node {
         r#type: old_node.r#type,
@@ -99,11 +98,4 @@ fn get_attributes(line: &str) -> Option<TextAttributes> {
         strike: STRIKE.is_match(line),
         bold_or_italics: BOLD_OR_ITALICS.is_match(line),
     })
-}
-
-#[inline(always)]
-fn push_new_str(mut first_string: String, string: String) -> String {
-    first_string.push_str(&string);
-
-    first_string
 }
