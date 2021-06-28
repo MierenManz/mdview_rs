@@ -41,14 +41,14 @@ pub fn generate_ast(mut markdown_string: String) -> Ast {
 
         body_len += 1;
 
-        let old_index = body_len - 2;
         let new_index = body_len - 1;
 
         if iteration > 2
             && iteration - 1 < body_len
-            && ast.body[old_index].include_next_line
+            && ast.body[body_len - 2].include_next_line
             && ast.body[new_index].allow_merge
         {
+            let old_index = body_len - 2;
             let old_node = ast.body[old_index].clone();
             let current_node = ast.body[new_index].clone();
 
